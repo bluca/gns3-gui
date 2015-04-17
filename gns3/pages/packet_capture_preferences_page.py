@@ -36,7 +36,7 @@ class PacketCapturePreferencesPage(QtGui.QWidget, Ui_PacketCapturePreferencesPag
 
     def __init__(self, parent=None):
 
-        QtGui.QWidget.__init__(self)
+        super().__init__()
         self.setupUi(self)
 
         # Load the pre-configured capture reader commands

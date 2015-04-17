@@ -39,7 +39,7 @@ class ServerPreferencesPage(QtGui.QWidget, Ui_ServerPreferencesPageWidget):
 
     def __init__(self, parent=None):
 
-        QtGui.QWidget.__init__(self)
+        super().__init__()
         self.setupUi(self)
         self._remote_servers = {}
 

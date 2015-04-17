@@ -54,7 +54,7 @@ class IOSRouterPreferencesPage(QtGui.QWidget, Ui_IOSRouterPreferencesPageWidget)
     """
 
     def __init__(self):
-        QtGui.QWidget.__init__(self)
+        super().__init__()
         self.setupUi(self)
 
         self._main_window = MainWindow.instance()

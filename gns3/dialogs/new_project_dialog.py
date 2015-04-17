@@ -33,7 +33,7 @@ class NewProjectDialog(QtGui.QDialog, Ui_NewProjectDialog):
 
     def __init__(self, parent, showed_from_startup=False):
 
-        QtGui.QDialog.__init__(self, parent)
+        super().__init__(parent)
         self.setupUi(self)
 
         self._main_window = parent

@@ -32,7 +32,7 @@ class EthernetHubConfigurationPage(QtGui.QWidget, Ui_ethernetHubConfigPageWidget
 
     def __init__(self):
 
-        QtGui.QWidget.__init__(self)
+        super().__init__()
         self.setupUi(self)
 
     def loadSettings(self, settings, node, group=False):

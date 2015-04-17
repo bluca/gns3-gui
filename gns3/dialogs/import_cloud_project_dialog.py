@@ -15,7 +15,7 @@ class ImportCloudProjectDialog(QtGui.QDialog, Ui_ImportCloudProjectDialog):
     """
 
     def __init__(self, parent, project_dest_path, images_dest_path, cloud_settings):
-        QtGui.QDialog.__init__(self, parent)
+        super().__init__(parent)
         self.setupUi(self)
 
         self.project_dest_path = project_dest_path

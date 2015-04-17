@@ -36,7 +36,7 @@ class PyCutExt(QtGui.QTextEdit):
 
     def __init__(self, interpreter, message="", log="", parent=None):
 
-        QtGui.QTextEdit.__init__(self, parent)
+        super().__init__(parent)
 
         self.interpreter = interpreter
         self.colorizer = SyntaxColor()

@@ -37,7 +37,7 @@ class VPCSPreferencesPage(QtGui.QWidget, Ui_VPCSPreferencesPageWidget):
 
     def __init__(self):
 
-        QtGui.QWidget.__init__(self)
+        super().__init__()
         self.setupUi(self)
 
         # connect signals

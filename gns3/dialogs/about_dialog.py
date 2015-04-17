@@ -28,7 +28,7 @@ class AboutDialog(QtGui.QDialog, Ui_AboutDialog):
 
     def __init__(self, parent):
 
-        QtGui.QDialog.__init__(self, parent)
+        super().__init__(parent)
         self.setupUi(self)
 
         # dynamically add the current version number

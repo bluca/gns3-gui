@@ -37,7 +37,7 @@ class IOUPreferencesPage(QtGui.QWidget, Ui_IOUPreferencesPageWidget):
 
     def __init__(self):
 
-        QtGui.QWidget.__init__(self)
+        super().__init__()
         self.setupUi(self)
 
         # connect signals

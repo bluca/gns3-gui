@@ -44,7 +44,7 @@ class QemuVMConfigurationPage(QtGui.QWidget, Ui_QemuVMConfigPageWidget):
 
     def __init__(self):
 
-        QtGui.QWidget.__init__(self)
+        super().__init__()
         self.setupUi(self)
 
         self.uiHdaDiskImageToolButton.clicked.connect(self._hdaDiskImageBrowserSlot)

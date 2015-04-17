@@ -32,7 +32,7 @@ class ATMSwitchConfigurationPage(QtGui.QWidget, Ui_atmSwitchConfigPageWidget):
 
     def __init__(self):
 
-        QtGui.QWidget.__init__(self)
+        super().__init__()
         self.setupUi(self)
         self._mapping = {}
 

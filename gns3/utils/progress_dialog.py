@@ -44,7 +44,7 @@ class ProgressDialog(QtGui.QProgressDialog):
         if busy:
             maximum = 0
 
-        QtGui.QProgressDialog.__init__(self, label_text, cancel_button_text, minimum, maximum, parent)
+        super().__init__(label_text, cancel_button_text, minimum, maximum, parent)
 
         self.setModal(True)
         self._errors = []

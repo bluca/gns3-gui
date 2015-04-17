@@ -42,7 +42,7 @@ class SnapshotsDialog(QtGui.QDialog, Ui_SnapshotsDialog):
 
     def __init__(self, parent, project_path, project_files_dir):
 
-        QtGui.QDialog.__init__(self, parent)
+        super().__init__(parent)
         self.setupUi(self)
 
         self._project_path = project_path

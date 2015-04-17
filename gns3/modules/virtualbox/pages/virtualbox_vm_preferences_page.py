@@ -40,7 +40,7 @@ class VirtualBoxVMPreferencesPage(QtGui.QWidget, Ui_VirtualBoxVMPreferencesPageW
     """
 
     def __init__(self):
-        QtGui.QWidget.__init__(self)
+        super().__init__()
         self.setupUi(self)
 
         self._main_window = MainWindow.instance()

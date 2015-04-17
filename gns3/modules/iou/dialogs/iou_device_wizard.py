@@ -43,7 +43,7 @@ class IOUDeviceWizard(QtGui.QWizard, Ui_IOUDeviceWizard):
 
     def __init__(self, iou_devices, parent):
 
-        QtGui.QWizard.__init__(self, parent)
+        super().__init__(parent)
         self.setupUi(self)
         self.setPixmap(QtGui.QWizard.LogoPixmap, QtGui.QPixmap(":/symbols/multilayer_switch.normal.svg"))
         self.setWizardStyle(QtGui.QWizard.ModernStyle)

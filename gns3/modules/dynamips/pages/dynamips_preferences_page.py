@@ -36,7 +36,7 @@ class DynamipsPreferencesPage(QtGui.QWidget, Ui_DynamipsPreferencesPageWidget):
 
     def __init__(self):
 
-        QtGui.QWidget.__init__(self)
+        super().__init__()
         self.setupUi(self)
 
         # connect signals

@@ -32,7 +32,7 @@ class EthernetSwitchConfigurationPage(QtGui.QWidget, Ui_ethernetSwitchConfigPage
 
     def __init__(self):
 
-        QtGui.QWidget.__init__(self)
+        super().__init__()
         self.setupUi(self)
         self._ports = {}
 

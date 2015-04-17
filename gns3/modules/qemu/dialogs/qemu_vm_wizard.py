@@ -43,7 +43,7 @@ class QemuVMWizard(QtGui.QWizard, Ui_QemuVMWizard):
 
     def __init__(self, qemu_vms, parent):
 
-        QtGui.QWizard.__init__(self, parent)
+        super().__init__(parent)
         self.setupUi(self)
         self.setPixmap(QtGui.QWizard.LogoPixmap, QtGui.QPixmap(":/icons/qemu.svg"))
         self.setWizardStyle(QtGui.QWizard.ModernStyle)

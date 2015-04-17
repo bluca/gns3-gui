@@ -68,7 +68,7 @@ class Dynamips(Module):
     """
 
     def __init__(self):
-        Module.__init__(self)
+        super().__init__()
 
         self._settings = {}
         self._ios_routers = {}

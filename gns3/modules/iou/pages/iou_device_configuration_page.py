@@ -36,7 +36,7 @@ class iouDeviceConfigurationPage(QtGui.QWidget, Ui_iouDeviceConfigPageWidget):
 
     def __init__(self):
 
-        QtGui.QWidget.__init__(self)
+        super().__init__()
         self.setupUi(self)
         self.uiInitialConfigToolButton.clicked.connect(self._initialConfigBrowserSlot)
         self.uiIOUImageToolButton.clicked.connect(self._iouImageBrowserSlot)

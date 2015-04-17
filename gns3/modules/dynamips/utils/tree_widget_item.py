@@ -26,7 +26,7 @@ class TreeWidgetItem(QtGui.QTreeWidgetItem):
 
     def __init__(self, parent=None):
 
-        QtGui.QTreeWidgetItem.__init__(self, parent)
+        super().__init__(parent)
 
     def __lt__(self, other_item):
 

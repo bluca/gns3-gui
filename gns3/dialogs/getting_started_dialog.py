@@ -32,7 +32,7 @@ class GettingStartedDialog(QtGui.QDialog, Ui_GettingStartedDialog):
 
     def __init__(self, parent):
 
-        QtGui.QDialog.__init__(self, parent)
+        super().__init__(parent)
         self.setupUi(self)
 
         self.uiWebView.page().mainFrame().setScrollBarPolicy(QtCore.Qt.Horizontal, QtCore.Qt.ScrollBarAlwaysOff)

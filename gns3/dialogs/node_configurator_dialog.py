@@ -37,7 +37,7 @@ class NodeConfiguratorDialog(QtGui.QDialog, Ui_NodeConfiguratorDialog):
 
     def __init__(self, node_items, parent):
 
-        QtGui.QDialog.__init__(self, parent)
+        super().__init__(parent)
         self.setupUi(self)
 
         self._node_items = node_items
@@ -221,7 +221,7 @@ class ConfigurationPageItem(QtGui.QTreeWidgetItem):
     def __init__(self, parent, node_item):
 
         self._node = node_item.node()
-        QtGui.QTreeWidgetItem.__init__(self, parent, [self._node.name()])
+        super().__init__(parent, [self._node.name()])
 
         # return the configuration page widget used to configure the node.
         self._page = self._node.configPage()
@@ -285,4 +285,4 @@ class ConfigurationError(Exception):
 
     def __init__(self):
 
-        Exception.__init__(self)
+        super().__init__()

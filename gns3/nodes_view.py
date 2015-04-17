@@ -34,7 +34,7 @@ class NodesView(QtGui.QTreeWidget):
 
     def __init__(self, parent=None):
 
-        QtGui.QTreeWidget.__init__(self, parent)
+        super().__init__(parent)
 
         # enables the possibility to drag items.
         self.setDragEnabled(True)

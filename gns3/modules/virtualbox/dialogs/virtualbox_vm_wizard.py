@@ -40,7 +40,7 @@ class VirtualBoxVMWizard(QtGui.QWizard, Ui_VirtualBoxVMWizard):
 
     def __init__(self, virtualbox_vms, parent):
 
-        QtGui.QWizard.__init__(self, parent)
+        super().__init__(parent)
         self.setupUi(self)
         self.setPixmap(QtGui.QWizard.LogoPixmap, QtGui.QPixmap(":/icons/virtualbox.png"))
         self.setWizardStyle(QtGui.QWizard.ModernStyle)

@@ -34,7 +34,7 @@ class NewsDockWidget(QtGui.QDockWidget, Ui_NewsDockWidget):
 
     def __init__(self, parent):
 
-        QtGui.QDockWidget.__init__(self, parent)
+        super().__init__(parent)
         self.setupUi(self)
 
         self._visible = True

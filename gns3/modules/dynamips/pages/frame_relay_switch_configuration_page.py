@@ -31,7 +31,7 @@ class FrameRelaySwitchConfigurationPage(QtGui.QWidget, Ui_frameRelaySwitchConfig
 
     def __init__(self):
 
-        QtGui.QWidget.__init__(self)
+        super().__init__()
         self.setupUi(self)
         self._mapping = {}
 

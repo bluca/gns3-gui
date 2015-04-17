@@ -14,7 +14,7 @@ class CloudPreferencesPage(QtGui.QWidget, Ui_CloudPreferencesPageWidget):
 
     def __init__(self, parent=None):
 
-        QtGui.QWidget.__init__(self)
+        super().__init__()
         self.setupUi(self)
 
         # the list containing provider controller classes

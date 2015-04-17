@@ -37,7 +37,7 @@ class ConfigurationDialog(QtGui.QDialog, Ui_configurationDialog):
 
     def __init__(self, name, settings, configuration_page, parent):
 
-        QtGui.QDialog.__init__(self, parent)
+        super().__init__(parent)
         self.setupUi(self)
 
         self.uiTitleLabel.setText(name)

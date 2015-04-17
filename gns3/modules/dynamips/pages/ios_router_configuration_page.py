@@ -36,7 +36,7 @@ class IOSRouterConfigurationPage(QtGui.QWidget, Ui_iosRouterConfigPageWidget):
 
     def __init__(self):
 
-        QtGui.QWidget.__init__(self)
+        super().__init__()
         self.setupUi(self)
 
         self._widget_slots = {0: self.uiSlot0comboBox,

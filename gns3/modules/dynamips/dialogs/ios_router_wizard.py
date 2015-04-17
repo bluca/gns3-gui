@@ -56,6 +56,7 @@ PLATFORM_TO_CLASS = {
 import logging
 log = logging.getLogger(__name__)
 
+
 class IOSRouterWizard(QtGui.QWizard, Ui_IOSRouterWizard):
 
     """
@@ -67,7 +68,7 @@ class IOSRouterWizard(QtGui.QWizard, Ui_IOSRouterWizard):
 
     def __init__(self, ios_routers, parent):
 
-        QtGui.QWizard.__init__(self, parent)
+        super().__init__(parent)
         self.setupUi(self)
         self.setPixmap(QtGui.QWizard.LogoPixmap, QtGui.QPixmap(":/symbols/router.normal.svg"))
         self.setWizardStyle(QtGui.QWizard.ModernStyle)

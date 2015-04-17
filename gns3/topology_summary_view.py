@@ -41,7 +41,7 @@ class TopologyNodeItem(QtGui.QTreeWidgetItem):
 
     def __init__(self, parent, node):
 
-        QtGui.QTreeWidgetItem.__init__(self, parent)
+        super().__init__(parent)
         self._node = node
         self._parent = parent
 
@@ -135,7 +135,7 @@ class TopologySummaryView(QtGui.QTreeWidget):
 
     def __init__(self, parent):
 
-        QtGui.QTreeWidget.__init__(self, parent)
+        super().__init__(parent)
         self._topology = Topology.instance()
         self.itemSelectionChanged.connect(self._itemSelectionChangedSlot)
         self.show_only_devices_with_capture = False

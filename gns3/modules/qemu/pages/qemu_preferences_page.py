@@ -33,7 +33,7 @@ class QemuPreferencesPage(QtGui.QWidget, Ui_QemuPreferencesPageWidget):
 
     def __init__(self):
 
-        QtGui.QWidget.__init__(self)
+        super().__init__()
         self.setupUi(self)
 
         # connect signals

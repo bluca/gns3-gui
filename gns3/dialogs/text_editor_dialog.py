@@ -34,7 +34,7 @@ class TextEditorDialog(QtGui.QDialog, Ui_TextEditorDialog):
 
     def __init__(self, parent, items):
 
-        QtGui.QDialog.__init__(self, parent)
+        super().__init__(parent)
         self.setupUi(self)
 
         self._items = items

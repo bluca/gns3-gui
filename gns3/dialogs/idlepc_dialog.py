@@ -30,7 +30,7 @@ class IdlePCDialog(QtGui.QDialog, Ui_IdlePCDialog):
 
     def __init__(self, router, idlepcs, parent):
 
-        QtGui.QDialog.__init__(self, parent)
+        super().__init__(parent)
         self.setupUi(self)
         self.uiButtonBox.button(QtGui.QDialogButtonBox.Apply).clicked.connect(self._applySlot)
         self.uiButtonBox.button(QtGui.QDialogButtonBox.Help).clicked.connect(self._helpSlot)

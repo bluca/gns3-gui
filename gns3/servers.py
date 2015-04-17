@@ -484,7 +484,6 @@ class Servers(QtCore.QObject):
 
         self._saveSettings()
 
-
     def disconnectAllServers(self):
         """
         Disconnects all servers (local and remote).

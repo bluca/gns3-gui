@@ -38,7 +38,7 @@ class GeneralPreferencesPage(QtGui.QWidget, Ui_GeneralPreferencesPageWidget):
 
     def __init__(self, parent=None):
 
-        QtGui.QWidget.__init__(self)
+        super().__init__()
         self.setupUi(self)
         self._remote_servers = {}
         self._preferences_dialog = parent

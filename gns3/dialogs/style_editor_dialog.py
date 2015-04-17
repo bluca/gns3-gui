@@ -34,7 +34,7 @@ class StyleEditorDialog(QtGui.QDialog, Ui_StyleEditorDialog):
 
     def __init__(self, parent, items):
 
-        QtGui.QDialog.__init__(self, parent)
+        super().__init__(parent)
         self.setupUi(self)
 
         self._items = items

@@ -45,7 +45,7 @@ class IOUDevicePreferencesPage(QtGui.QWidget, Ui_IOUDevicePreferencesPageWidget)
     """
 
     def __init__(self):
-        QtGui.QWidget.__init__(self)
+        super().__init__()
         self.setupUi(self)
 
         self._main_window = MainWindow.instance()

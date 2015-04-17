@@ -41,7 +41,7 @@ class PreferencesDialog(QtGui.QDialog, Ui_PreferencesDialog):
 
     def __init__(self, parent):
 
-        QtGui.QDialog.__init__(self, parent)
+        super().__init__(parent)
         self.setupUi(self)
 
         self.uiTreeWidget.currentItemChanged.connect(self._showPreferencesPageSlot)

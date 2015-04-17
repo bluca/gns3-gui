@@ -44,7 +44,7 @@ class IOU(Module):
     """
 
     def __init__(self):
-        Module.__init__(self)
+        super().__init__()
 
         self._settings = {}
         self._nodes = []

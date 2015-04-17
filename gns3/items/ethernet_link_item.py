@@ -41,7 +41,7 @@ class EthernetLinkItem(LinkItem):
 
     def __init__(self, source_item, source_port, destination_item, destination_port, link=None, adding_flag=False, multilink=0):
 
-        LinkItem.__init__(self, source_item, source_port, destination_item, destination_port, link, adding_flag, multilink)
+        super().__init__(source_item, source_port, destination_item, destination_port, link, adding_flag, multilink)
         self._source_collision_offset = 0.0
         self._destination_collision_offset = 0.0
 

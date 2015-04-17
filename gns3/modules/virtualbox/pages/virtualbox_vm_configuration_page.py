@@ -33,7 +33,7 @@ class VirtualBoxVMConfigurationPage(QtGui.QWidget, Ui_virtualBoxVMConfigPageWidg
 
     def __init__(self):
 
-        QtGui.QWidget.__init__(self)
+        super().__init__()
         self.setupUi(self)
 
         self.uiAdapterTypesComboBox.clear()
@@ -93,7 +93,6 @@ class VirtualBoxVMConfigurationPage(QtGui.QWidget, Ui_virtualBoxVMConfigPageWidg
         self.uiVMRamSpinBox.setValue(settings["ram"])
         self.uiHeadlessModeCheckBox.setChecked(settings["headless"])
         self.uiEnableConsoleCheckBox.setChecked(settings["enable_remote_console"])
-
 
     def saveSettings(self, settings, node=None, group=False):
         """

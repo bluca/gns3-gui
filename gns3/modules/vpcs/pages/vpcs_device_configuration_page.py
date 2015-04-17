@@ -34,7 +34,7 @@ class VPCSDeviceConfigurationPage(QtGui.QWidget, Ui_VPCSDeviceConfigPageWidget):
 
     def __init__(self):
 
-        QtGui.QWidget.__init__(self)
+        super().__init__()
         self.setupUi(self)
         # self.uiScriptFileToolButton.clicked.connect(self._scriptFileBrowserSlot)
 

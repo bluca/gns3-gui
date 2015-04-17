@@ -35,7 +35,7 @@ class SymbolSelectionDialog(QtGui.QDialog, Ui_SymbolSelectionDialog):
 
     def __init__(self, parent, items=None, symbol=None, category=None):
 
-        QtGui.QDialog.__init__(self, parent)
+        super().__init__(parent)
         self.setupUi(self)
 
         self._items = items

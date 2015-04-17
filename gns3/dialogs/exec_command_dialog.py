@@ -27,7 +27,7 @@ class ExecCommandDialog(QtGui.QDialog, Ui_ExecCommandDialog):
 
     def __init__(self, parent, command, params):
 
-        QtGui.QDialog.__init__(self, parent)
+        super().__init__(parent)
         self.setupUi(self)
 
         self.setWindowTitle("Executing {}".format(command))
