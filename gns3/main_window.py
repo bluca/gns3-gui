@@ -88,6 +88,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
         super().__init__(parent)
         self.setupUi(self)
+
         MainWindow._instance = self
 
         self._settings = {}
@@ -178,9 +179,6 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
         self._settings = local_config.loadSectionSettings(self.__class__.__name__, GENERAL_SETTINGS)
         self._cloud_settings = local_config.loadSectionSettings("Cloud", CLOUD_SETTINGS)
-
-        # restore the style
-        self._setStyle(self._settings.get("style"))
 
         # restore packet capture settings
         Port.loadPacketCaptureSettings()
@@ -1128,6 +1126,8 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         """
         Called by QTimer.singleShot to load everything needed at startup.
         """
+        # restore the style
+        self._setStyle(self._settings.get("style"))
 
         if self._settings["debug_level"]:
             root = logging.getLogger()
@@ -1224,6 +1224,8 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                 self._checkForUpdateActionSlot(silent=True)
                 self._settings["last_check_for_update"] = current_epoch
                 self.setSettings(self._settings)
+
+
 
     def saveProjectAs(self):
         """
