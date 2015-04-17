@@ -118,4 +118,4 @@ class StyleEditorDialog(QtGui.QDialog, Ui_StyleEditorDialog):
 
         if result:
             self._applyPreferencesSlot()
-        QtGui.QDialog.done(self, result)
+        super().done(result)

@@ -487,7 +487,7 @@ class GraphicsView(QtGui.QGraphicsView):
             self.setCursor(QtCore.Qt.ArrowCursor)
             self._adding_ellipse = False
         else:
-            QtGui.QGraphicsView.mousePressEvent(self, event)
+            super().mousePressEvent(event)
 
     def mouseReleaseEvent(self, event):
         """
@@ -505,7 +505,7 @@ class GraphicsView(QtGui.QGraphicsView):
         else:
             if item is not None and not event.modifiers() & QtCore.Qt.ControlModifier:
                 item.setSelected(True)
-            QtGui.QGraphicsView.mouseReleaseEvent(self, event)
+            super().mouseReleaseEvent(event)
 
     def wheelEvent(self, event):
         """
@@ -518,7 +518,7 @@ class GraphicsView(QtGui.QGraphicsView):
             # CTRL is pressed then use the mouse wheel to zoom in or out.
             self.scaleView(pow(2.0, event.delta() / 240.0))
         else:
-            QtGui.QGraphicsView.wheelEvent(self, event)
+            super().wheelEvent(event)
 
     def scaleView(self, scale_factor):
         """
@@ -541,12 +541,12 @@ class GraphicsView(QtGui.QGraphicsView):
             # check if we are editing an NoteItem instance, then send the delete key event to it
             for item in self.scene().selectedItems():
                 if isinstance(item, NoteItem) and item.hasFocus():
-                    QtGui.QGraphicsView.keyPressEvent(self, event)
+                    super().keyPressEvent(event)
                     return
             self.deleteActionSlot()
-            QtGui.QGraphicsView.keyPressEvent(self, event)
+            super().keyPressEvent(event)
         else:
-            QtGui.QGraphicsView.keyPressEvent(self, event)
+            super().keyPressEvent(event)
 
     def mouseMoveEvent(self, event):
         """
@@ -576,7 +576,7 @@ class GraphicsView(QtGui.QGraphicsView):
                 # show item coords in the status bar
                 coords = "X: {} Y: {} Z: {}".format(item.x(), item.y(), item.zValue())
                 self._main_window.uiStatusBar.showMessage(coords, 2000)
-            QtGui.QGraphicsView.mouseMoveEvent(self, event)
+            super().mouseMoveEvent(event)
 
     def mouseDoubleClickEvent(self, event):
         """
@@ -593,7 +593,7 @@ class GraphicsView(QtGui.QGraphicsView):
             else:
                 self.configureSlot()
         else:
-            QtGui.QGraphicsView.mouseDoubleClickEvent(self, event)
+            super().mouseDoubleClickEvent(event)
 
     def configureSlot(self, items=None):
         """

@@ -99,4 +99,4 @@ class TextEditorDialog(QtGui.QDialog, Ui_TextEditorDialog):
 
         if result:
             self._applyPreferencesSlot()
-        QtGui.QDialog.done(self, result)
+        super().done(result)

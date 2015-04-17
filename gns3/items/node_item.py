@@ -440,7 +440,7 @@ class NodeItem(QtSvg.QGraphicsSvgItem):
         # don't show the selection rectangle
         if not self._settings["draw_rectangle_selected_item"]:
             option.state = QtGui.QStyle.State_None
-        QtSvg.QGraphicsSvgItem.paint(self, painter, option, widget)
+        super().paint(painter, option, widget)
 
         if not self._initialized or self.show_layer:
             brect = self.boundingRect()
@@ -464,7 +464,7 @@ class NodeItem(QtSvg.QGraphicsSvgItem):
         :param value: Z value
         """
 
-        QtSvg.QGraphicsSvgItem.setZValue(self, value)
+        super().setZValue(value)
         if self.zValue() < 0:
             self.setFlag(self.ItemIsSelectable, False)
             self.setFlag(self.ItemIsMovable, False)

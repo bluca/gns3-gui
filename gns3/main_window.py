@@ -1024,7 +1024,7 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
             self.uiAddLinkAction.setChecked(False)
             self._addLinkActionSlot()
         else:
-            QtGui.QMainWindow.keyPressEvent(self, event)
+            super().keyPressEvent(event)
 
     def closeEvent(self, event):
         """

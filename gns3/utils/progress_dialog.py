@@ -105,4 +105,4 @@ class ProgressDialog(QtGui.QProgressDialog):
         if not self._thread.wait(3000):
             self._thread.terminate()
             self._thread.wait()
-        QtGui.QProgressDialog.done(self, result)
+        super().done(result)

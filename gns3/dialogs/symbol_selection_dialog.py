@@ -127,4 +127,4 @@ class SymbolSelectionDialog(QtGui.QDialog, Ui_SymbolSelectionDialog):
 
         if result and self._items:
             self._applyPreferencesSlot()
-        QtGui.QDialog.done(self, result)
+        super().done(result)

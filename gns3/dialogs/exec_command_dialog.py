@@ -57,4 +57,4 @@ class ExecCommandDialog(QtGui.QDialog, Ui_ExecCommandDialog):
 
         self._process.kill()
         self._process.waitForFinished()
-        QtGui.QDialog.done(self, result)
+        super().done(result)

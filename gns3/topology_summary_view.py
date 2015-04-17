@@ -218,7 +218,7 @@ class TopologySummaryView(QtGui.QTreeWidget):
         if event.button() == QtCore.Qt.RightButton:
             self._showContextualMenu()
         else:
-            QtGui.QTreeWidget.mousePressEvent(self, event)
+            super().mousePressEvent(event)
 
     def _showContextualMenu(self):
         """

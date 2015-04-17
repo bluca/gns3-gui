@@ -142,4 +142,4 @@ class NewProjectDialog(QtGui.QDialog, Ui_NewProjectDialog):
             self._project_settings["project_files_dir"] = project_location
             self._project_settings["project_type"] = project_type
 
-        QtGui.QDialog.done(self, result)
+        super().done(result)

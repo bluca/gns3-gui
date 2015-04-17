@@ -324,7 +324,7 @@ class IOSRouterWizard(QtGui.QWizard, Ui_IOSRouterWizard):
 
         if self._router:
             self._router.delete()
-        QtGui.QWizard.done(self, result)
+        super().done(result)
 
     def _populateAdapters(self, platform, chassis):
         """

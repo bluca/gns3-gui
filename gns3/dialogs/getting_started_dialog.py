@@ -68,7 +68,7 @@ class GettingStartedDialog(QtGui.QDialog, Ui_GettingStartedDialog):
         """
 
         self._local_config.saveSectionSettings("GUI", {"hide_getting_started_dialog": self.uiCheckBox.isChecked()})
-        QtGui.QDialog.done(self, result)
+        super().done(result)
 
     def _urlClickedSlot(self, url):
         """

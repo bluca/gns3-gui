@@ -83,4 +83,4 @@ class IdlePCDialog(QtGui.QDialog, Ui_IdlePCDialog):
 
         if result:
             self._applySlot()
-        QtGui.QDialog.done(self, result)
+        super().done(result)
