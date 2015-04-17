@@ -37,7 +37,7 @@ class NodeItem(QtSvg.QGraphicsSvgItem):
 
     def __init__(self, node, default_symbol=None, hover_symbol=None):
 
-        QtSvg.QGraphicsSvgItem.__init__(self)
+        super().__init__()
 
         # attached node
         self._node = node
@@ -53,7 +53,7 @@ class NodeItem(QtSvg.QGraphicsSvgItem):
         self.setFlag(QtSvg.QGraphicsSvgItem.ItemIsSelectable)
         self.setFlag(QtSvg.QGraphicsSvgItem.ItemIsFocusable)
         self.setFlag(QtSvg.QGraphicsSvgItem.ItemSendsGeometryChanges)
-        self.setAcceptsHoverEvents(True)
+        self.setAcceptHoverEvents(True)
         self.setZValue(1)
 
         # create renderers using symbols paths/resources

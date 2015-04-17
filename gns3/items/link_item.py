@@ -23,10 +23,10 @@ Link items are graphical representation of a link on the QGraphicsScene
 import math
 import struct
 import sys
-from ..qt import QtCore, QtGui
+from ..qt import QtCore, QtGui, QtWidgets
 
 
-class LinkItem(QtGui.QGraphicsPathItem):
+class LinkItem(QtWidgets.QGraphicsPathItem):
 
     """
     Base class for link items.
@@ -44,8 +44,8 @@ class LinkItem(QtGui.QGraphicsPathItem):
 
     def __init__(self, source_item, source_port, destination_item, destination_port, link=None, adding_flag=False, multilink=0):
 
-        QtGui.QGraphicsPathItem.__init__(self)
-        self.setAcceptsHoverEvents(True)
+        super().__init__()
+        self.setAcceptHoverEvents(True)
         self.setZValue(-1)
         self._link = None
 
@@ -228,11 +228,11 @@ class LinkItem(QtGui.QGraphicsPathItem):
                 return
 
             # create the contextual menu
-            self.setAcceptsHoverEvents(False)
+            self.setAcceptHoverEvents(False)
             menu = QtGui.QMenu()
             self.populateLinkContextualMenu(menu)
             menu.exec_(QtGui.QCursor.pos())
-            self.setAcceptsHoverEvents(True)
+            self.setAcceptHoverEvents(True)
             self._hovered = False
             self.adjust()
 
@@ -243,7 +243,7 @@ class LinkItem(QtGui.QGraphicsPathItem):
         :param event: QKeyEvent
         """
 
-        #On pressing backspace or delete key, the selected link gets deleted
+        # On pressing backspace or delete key, the selected link gets deleted
         if event.key() == QtCore.Qt.Key_Delete or event.key() == QtCore.Qt.Key_Backspace:
             self._deleteActionSlot()
             return

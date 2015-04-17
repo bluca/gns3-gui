@@ -525,7 +525,7 @@ class GraphicsView(QtGui.QGraphicsView):
         Scales the view (zoom in and out).
         """
 
-        factor = self.matrix().scale(scale_factor, scale_factor).mapRect(QtCore.QRectF(0, 0, 1, 1)).width()
+        factor = self.transform().scale(scale_factor, scale_factor).mapRect(QtCore.QRectF(0, 0, 1, 1)).width()
         if (factor < 0.10 or factor > 10):
             return
         self.scale(scale_factor, scale_factor)
@@ -544,7 +544,7 @@ class GraphicsView(QtGui.QGraphicsView):
                     QtGui.QGraphicsView.keyPressEvent(self, event)
                     return
             self.deleteActionSlot()
-            QtGui.QGraphicsView.keyPressEvent(self,event)
+            QtGui.QGraphicsView.keyPressEvent(self, event)
         else:
             QtGui.QGraphicsView.keyPressEvent(self, event)
 
@@ -1137,9 +1137,9 @@ class GraphicsView(QtGui.QGraphicsView):
             router = item.node()
             #question = QtGui.QMessageBox.question(self, "Auto Idle-PC", "Would you like to automatically find a suitable Idle-PC value (but not optimal)?", QtGui.QMessageBox.Yes, QtGui.QMessageBox.No)
 
-            #if question == QtGui.QMessageBox.Yes:
+            # if question == QtGui.QMessageBox.Yes:
             #    router.computeAutoIdlepc(self._autoIdlepcCallback)
-            #else:
+            # else:
             router.computeIdlepcs(self._idlepcCallback)
 
     def _idlepcCallback(self, result, error=False, context={}, **kwargs):

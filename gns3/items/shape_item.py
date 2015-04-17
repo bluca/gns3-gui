@@ -30,10 +30,10 @@ class ShapeItem:
 
     show_layer = False
 
-    def __init__(self):
+    def __init__(self, **kws):
 
         self.setFlags(QtGui.QGraphicsItem.ItemIsMovable | QtGui.QGraphicsItem.ItemIsFocusable | QtGui.QGraphicsItem.ItemIsSelectable)
-        self.setAcceptsHoverEvents(True)
+        self.setAcceptHoverEvents(True)
         self._border = 5
         self._edge = None
 

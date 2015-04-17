@@ -16,22 +16,65 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 """
-Compatibility layer for Qt bindings, so it is easier to switch from PyQt4 to PySide and
-vice-versa. Possibility to add PyQt5 in the future as well. Current default is PyQt4.
+Compatibility layer for Qt bindings, so it is easier to switch from PyQt4 to PyQt5 and
+vice-versa. If you need you can add PySide
 """
 
 # based on https://gist.github.com/remram44/5985681
 
 import sys
 import sip
+import os
 
 import logging
 log = logging.getLogger(__name__)
 
 
-DEFAULT_BINDING = 'PyQt'
+if os.environ.get('GNS3_QT4', None) is not None:
+    DEFAULT_BINDING = 'PyQt4'
+else:
+    try:
+        import PyQt5
+        DEFAULT_BINDING = 'PyQt5'
+    except ImportError:
+        DEFAULT_BINDING = 'PyQt4'
 
-if DEFAULT_BINDING == 'PyQt':
+if DEFAULT_BINDING == 'PyQt5':
+    from PyQt5 import QtCore, QtGui, QtNetwork, QtSvg, QtWebKit, QtWidgets
+    sys.modules[__name__ + '.QtCore'] = QtCore
+    sys.modules[__name__ + '.QtGui'] = QtGui
+    sys.modules[__name__ + '.QtNetwork'] = QtNetwork
+    sys.modules[__name__ + '.QtSvg'] = QtSvg
+    sys.modules[__name__ + '.QtWebKit'] = QtWebKit
+    sys.modules[__name__ + '.QtWidgets'] = QtWidgets
+
+    QtCore.Signal = QtCore.pyqtSignal
+    QtCore.Slot = QtCore.pyqtSlot
+    QtCore.Property = QtCore.pyqtProperty
+    QtCore.BINDING_VERSION_STR = QtCore.PYQT_VERSION_STR
+
+    # Qt 4 compatibility
+    QtGui.QMessageBox = QtWidgets.QMessageBox
+    QtGui.QTextEdit = QtWidgets.QTextEdit
+    QtGui.QTreeWidget = QtWidgets.QTreeWidget
+    QtGui.QTreeWidgetItem = QtWidgets.QTreeWidgetItem
+    QtGui.QDialog = QtWidgets.QDialog
+    QtGui.QGraphicsView = QtWidgets.QGraphicsView
+    QtGui.QGraphicsItem = QtWidgets.QGraphicsItem
+    QtGui.QProgressDialog = QtWidgets.QProgressDialog
+    QtGui.QWidget = QtWidgets.QWidget
+    QtGui.QMainWindow = QtWidgets.QMainWindow
+    QtGui.QApplication = QtWidgets.QApplication
+    QtGui.QGraphicsScene = QtWidgets.QGraphicsScene
+    QtGui.QAction = QtWidgets.QAction
+    QtGui.QDialogButtonBox = QtWidgets.QDialogButtonBox
+    QtGui.QStyle = QtWidgets.QStyle
+    QtGui.QWizard = QtWidgets.QWizard
+    QtGui.QMenu = QtWidgets.QMenu
+    QtGui.QGraphicsPathItem = QtWidgets.QGraphicsPathItem
+    QtGui.QFileDialog = QtWidgets.QFileDialog
+
+elif DEFAULT_BINDING == 'PyQt4':
     sip.setapi('QDate', 2)
     sip.setapi('QDateTime', 2)
     sip.setapi('QString', 2)
@@ -57,26 +100,8 @@ if DEFAULT_BINDING == 'PyQt':
     QtCore.Property = QtCore.pyqtProperty
     QtCore.BINDING_VERSION_STR = QtCore.PYQT_VERSION_STR
 
-elif DEFAULT_BINDING == 'PySide':
-
-    from PySide import QtCore, QtGui, QtNetwork, QtSvg, __version__
-    sys.modules[__name__ + '.QtCore'] = QtCore
-    sys.modules[__name__ + '.QtGui'] = QtGui
-    sys.modules[__name__ + '.QtNetwork'] = QtNetwork
-    sys.modules[__name__ + '.QtSvg'] = QtSvg
-
-    try:
-        from PySide import QtWebKit
-        sys.modules[__name__ + '.QtWebKit'] = QtWebKit
-    except ImportError:
-        pass
-
-    QtCore.QT_VERSION_STR = QtCore.__version__
-    QtCore.BINDING_VERSION_STR = __version__
-
-else:
-    raise ImportError("Python binding not specified.")
-
+    # Qt 5 compatibilty previously it was QtGui sub modules
+    QtWidgets = QtGui
 
 # If we run from a test we replace the signal by a synchronous version
 if hasattr(sys, '_called_from_test'):

@@ -20,6 +20,8 @@ import sys
 import struct
 import inspect
 import datetime
+
+from .qt import QtCore
 from .topology import Topology
 from .version import __version__
 from .console_cmd import ConsoleCmd
@@ -38,8 +40,8 @@ class ConsoleView(PyCutExt, ConsoleCmd):
         # Set introduction message
         bitness = struct.calcsize("P") * 8
         current_year = datetime.date.today().year
-        self.intro = "GNS3 management console. Running GNS3 version {} on {} ({}-bit).\n" \
-                     "Copyright (c) 2006-{} GNS3 Technologies.".format(__version__, platform.system(), bitness, current_year)
+        self.intro = "GNS3 management console. Running GNS3 version {} on {} ({}-bit) with Qt {}.\n" \
+                     "Copyright (c) 2006-{} GNS3 Technologies.".format(__version__, platform.system(), bitness, QtCore.QT_VERSION_STR, current_year)
 
         # Parent class initialization
         try:

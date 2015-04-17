@@ -47,7 +47,6 @@ from .dialogs.about_dialog import AboutDialog
 from .dialogs.new_project_dialog import NewProjectDialog
 from .dialogs.preferences_dialog import PreferencesDialog
 from .dialogs.snapshots_dialog import SnapshotsDialog
-from .dialogs.import_cloud_project_dialog import ImportCloudProjectDialog
 from .settings import GENERAL_SETTINGS, GENERAL_SETTING_TYPES, CLOUD_SETTINGS, CLOUD_SETTINGS_TYPES, ENABLE_CLOUD
 from .utils.progress_dialog import ProgressDialog
 from .utils.process_files_thread import ProcessFilesThread
@@ -64,7 +63,6 @@ from .topology import Topology
 from .cloud.utils import UploadProjectThread, UploadFilesThread, ssh_client, DownloadImagesThread, DeleteInstanceThread
 from .cloud.rackspace_ctrl import get_provider
 from .cloud.exceptions import KeyPairExists
-from .cloud_instances import CloudInstances
 from .project import Project
 from .http_client import HTTPClient
 from .progress import Progress
@@ -126,16 +124,10 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
         self.restoreGeometry(QtCore.QByteArray().fromBase64(gui_settings["geometry"]))
         self.restoreState(QtCore.QByteArray().fromBase64(gui_settings["state"]))
 
-        # do not show the nodes dock widget my default
-        if not ENABLE_CLOUD:
-            self.uiCloudInspectorDockWidget.close()
-
         # populate the view -> docks menu
         self.uiDocksMenu.addAction(self.uiTopologySummaryDockWidget.toggleViewAction())
         self.uiDocksMenu.addAction(self.uiConsoleDockWidget.toggleViewAction())
         self.uiDocksMenu.addAction(self.uiNodesDockWidget.toggleViewAction())
-        if ENABLE_CLOUD:
-            self.uiDocksMenu.addAction(self.uiCloudInspectorDockWidget.toggleViewAction())
 
         # add recent file actions to the File menu
         for i in range(0, self._max_recent_files):
@@ -149,8 +141,6 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
         self._updateRecentFileActions()
 
         self._cloud_provider = None
-        CloudInstances.instance().clear()
-        CloudInstances.instance().load()
 
         # set the window icon
         self.setWindowIcon(QtGui.QIcon(":/images/gns3.ico"))
@@ -254,8 +244,6 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
         self.uiSaveProjectAsAction.triggered.connect(self._saveProjectAsActionSlot)
         self.uiExportProjectAction.triggered.connect(self._exportProjectActionSlot)
         self.uiImportProjectAction.triggered.connect(self._importProjectActionSlot)
-        self.uiMoveLocalProjectToCloudAction.triggered.connect(self._moveLocalProjectToCloudActionSlot)
-        self.uiMoveCloudProjectToLocalAction.triggered.connect(self._moveCloudProjectToLocalActionSlot)
         self.uiImportExportConfigsAction.triggered.connect(self._importExportConfigsActionSlot)
         self.uiScreenshotAction.triggered.connect(self._screenshotActionSlot)
         self.uiSnapshotAction.triggered.connect(self._snapshotActionSlot)
@@ -318,9 +306,6 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
         # project
         self._project.project_about_to_close_signal.connect(self.shutdown_cloud_instances)
         self.project_new_signal.connect(self.project_created)
-
-        # cloud inspector
-        self.CloudInspectorView.instanceSelected.connect(self._cloud_instance_selected)
 
     def project(self):
         """
@@ -399,8 +384,6 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
 
         topology = Topology.instance()
         topology.project = self._project
-        for instance in CloudInstances.instance().instances:
-            topology.addInstance2(instance)
 
         self._project.setName(new_project_settings["project_name"])
         self._project.setTopologyFile(new_project_settings["project_path"])
@@ -1594,14 +1577,11 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
             with open(project) as f:
                 json_topology = json.load(f)
 
-                self.CloudInspectorView.clear()
-
                 if json_topology["resources_type"] != 'cloud':
                     # do nothing in case of local projects
                     return
 
                 project_instances = json_topology["topology"]["instances"]
-                self.CloudInspectorView.load(self, [i["id"] for i in project_instances])
         except (OSError, ValueError) as e:
             QtGui.QMessageBox.critical(self, "Project", "Could not read project: {}".format(e))
 
@@ -1620,7 +1600,6 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
         topology = Topology.instance()
         topology.addInstance(instance.name, instance.id, instance.extra['flavorId'],
                              default_image_id, keypair.private_key, keypair.public_key)
-        self.CloudInspectorView.addInstance(instance)
 
         # persist infos saving current project
         if not self.loading_cloud_project:
@@ -1699,11 +1678,6 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
         progress_dialog.exec_()
 
     def _importProjectActionSlot(self):
-
-        if not ENABLE_CLOUD:
-            QtGui.QMessageBox.critical(self, "Cloud topology", "Sorry this feature is not yet available")
-            return
-
         dialog = ImportCloudProjectDialog(
             self,
             self.projectsDirPath(),
@@ -1713,230 +1687,6 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
 
         dialog.show()
         dialog.exec_()
-
-    def _moveLocalProjectToCloudActionSlot(self):
-
-        if not ENABLE_CLOUD:
-            QtGui.QMessageBox.critical(self, "Cloud topology", "Sorry this feature is not yet available")
-            return
-
-        if self.isTemporaryProject():
-            # do nothing if project is temporary
-            QtGui.QMessageBox.critical(
-                self,
-                "Move project to Cloud",
-                "Cannot move temporary projects, please save current project first.")
-            return
-        if self._project.type() == "cloud":
-            # do nothing if project is already a cloud project
-            QtGui.QMessageBox.critical(
-                self,
-                "Move project to Cloud",
-                "This project is already a Cloud Project")
-            return
-        if not self.checkForUnsavedChanges():
-            # do nothing if project is already a cloud project
-            QtGui.QMessageBox.critical(
-                self,
-                "Unsaved changes",
-                "There are unsaved changes. Please save the project first.")
-            return
-
-        # Upload images to cloud storage
-        topology = Topology.instance()
-        images = set([
-            (
-                node.settings()['image'],
-                'images/' + os.path.relpath(node.settings()['image'], self.imagesDirPath())
-            )
-            for node in topology.nodes() if 'image' in node.settings()
-        ])
-        log.debug('uploading images ' + str(images) + ' to cloud')
-        upload_thread = UploadFilesThread(self, self._cloud_settings, images)
-        upload_images_progress_dialog = ProgressDialog(upload_thread, "Uploading images", "Uploading image files...",
-                                                       "Cancel", parent=self)
-        upload_images_progress_dialog.show()
-        upload_images_progress_dialog.exec_()
-
-        progress_dialog = QtGui.QProgressDialog("Moving project to cloud", "Cancel", 0, 100, self)
-        progress_dialog.show()
-
-        def buildComplete(server_id):
-            progress_dialog.setValue(80)
-            log.debug("websocket connected, server_id=" + str(server_id))
-
-            instance = topology.getInstance(server_id)
-            # copy nvram, config, and disk files to server
-            with ssh_client(instance.host, instance.private_key) as client:
-                log.debug('copying device files to cloud instance')
-                sftp = client.open_sftp()
-
-                project_files_dir = os.path.join(
-                    os.path.dirname(self._project.topologyFile()),
-                    os.path.basename(os.path.dirname(self._project.topologyFile()))
-                )
-                dest_project_path = posixpath.join(
-                    '/root/GNS3/projects',
-                    os.path.basename(os.path.dirname(self._project.topologyFile()))
-                )
-
-                for root, dirs, files in os.walk(project_files_dir):
-                    directory = posixpath.normpath(posixpath.join(
-                        dest_project_path,
-                        os.path.relpath(root, project_files_dir).replace('\\', '/')
-                    ))
-                    sftp.mkdir(directory)
-                    sftp.chdir(directory)
-
-                    for file in files:
-                        local_filepath = os.path.join(root, file)
-                        if os.path.isfile(local_filepath) and not self._should_exclude_copying_file(file):
-                            log.debug('copying file ' + local_filepath)
-                            sftp.put(local_filepath, file)
-                            log.debug('copied file successfully')
-
-                sftp.close()
-
-            self._project.setType("cloud")
-
-            # switch server on all nodes to cloud instance
-            server = Servers.instance().anyCloudServer()
-
-            for node in topology.nodes():
-                node._server = server
-
-            # reload project
-            self.saveProject(self._project.topologyFile())
-            topology.reset()
-            self.loadProject(self._project.topologyFile())
-            progress_dialog.accept()
-
-        instances = CloudInstances.instance().instances
-        for instance in instances:
-            topology.addInstance2(instance)
-        self.CloudInspectorView.load(self, [i.id for i in topology.instances()])
-
-        # Create a new instance.  At some point we could reuse an existing instance.
-        builder = self.CloudInspectorView.createInstance(
-            self._project.name(),
-            self.cloudSettings()['default_flavor'],
-            self.cloudSettings()['default_image']
-        )
-        builder.buildComplete.connect(buildComplete)
-
-    def _moveCloudProjectToLocalActionSlot(self):
-
-        if not ENABLE_CLOUD:
-            QtGui.QMessageBox.critical(self, "Cloud topology", "Sorry this feature is not yet available")
-            return
-
-        if self.isTemporaryProject():
-            # do nothing if project is temporary
-            QtGui.QMessageBox.critical(
-                self,
-                "Move project to local machine",
-                "Cannot move temporary projects, please save current project first.")
-            return
-        if self._project.type() == "local":
-            # do nothing if project is already a cloud project
-            QtGui.QMessageBox.critical(
-                self,
-                "Move project to ",
-                "This project is already a local project")
-            return
-        if not self.checkForUnsavedChanges():
-            # do nothing if project is already a cloud project
-            QtGui.QMessageBox.critical(
-                self,
-                "Unsaved changes",
-                "There are unsaved changes. Please save the project first.")
-            return
-
-        topology = Topology.instance()
-
-        # download images from cloud storage
-        images = set(
-            [posixpath.basename(node.settings()["image"]) for node in topology.nodes() if 'image' in node.settings()]
-        )
-
-        log.debug('downloading images ' + str(images))
-        download_images_thread = DownloadImagesThread(self._cloud_settings, self.imagesDirPath(), images)
-        download_images_progress_dialog = ProgressDialog(download_images_thread, "Downloading Images",
-                                                         "Downloading images files...", "Cancel", parent=self)
-        download_images_progress_dialog.show()
-        download_images_progress_dialog.exec_()
-
-        # copy device files from cloud instances
-        src_project_path = posixpath.join(
-            '/root/GNS3/projects',
-            os.path.basename(os.path.dirname(self._project.topologyFile()))
-        )
-        project_files_dir = os.path.join(
-            os.path.dirname(self._project.topologyFile()),
-            os.path.basename(os.path.dirname(self._project.topologyFile()))
-        )
-
-        for topology_instance in topology.instances():
-            log.debug('copying device files from instance ' + str(topology_instance.host))
-            with ssh_client(topology_instance.host, topology_instance.private_key) as client:
-                if client is not None:
-                    sftp = client.open_sftp()
-
-                    def copy_files(src_dir, dest_dir):
-                        if not os.path.exists(dest_dir):
-                            os.makedirs(dest_dir)
-
-                        files = [f.filename for f in sftp.listdir_attr(src_dir) if stat.S_ISREG(f.st_mode)]
-                        for file in files:
-                            if not self._should_exclude_copying_file(file):
-                                src_filename = posixpath.join(src_dir, file)
-                                dest_filename = os.path.join(dest_dir, file)
-                                sftp.get(src_filename, dest_filename)
-
-                        dirs = [d.filename for d in sftp.listdir_attr(src_dir) if stat.S_ISDIR(d.st_mode)]
-                        for d in dirs:
-                            copy_files(posixpath.join(src_dir, d), os.path.join(dest_dir, d))
-
-                    copy_files(src_project_path, project_files_dir)
-
-                    sftp.close()
-                else:
-                    log.debug('could not connect to instance ' + str(topology_instance.host))
-
-        # switch server on all nodes to local server
-        server = Servers.instance().localServer()
-
-        for node in topology.nodes():
-            node._server = server
-            if "image" in node.settings():
-                node.settings()["image"] = os.path.basename(node.settings()["image"])
-
-        # reload project
-        self._project.setType("local")
-        self.saveProject(self._project.topologyFile())
-        topology.reset()
-        self.loadProject(self._project.topologyFile())
-
-    @staticmethod
-    def _should_exclude_copying_file(filename):
-        """
-        Returns whether or not a file should be excluded from copying when converting projects
-        from cloud to local or vice versa
-        :param filename:
-        :return: True if file should be excluded, False otherwise
-        """
-        return filename.endswith('.ghost')
-
-    def _cloud_instance_selected(self, instance_id):
-        """
-        Clear selection, then select all the nodes on the graphics view
-        running on the instance_id instance
-        """
-        self.uiGraphicsView.scene().clearSelection()
-        for item in self.uiGraphicsView.scene().items():
-            if isinstance(item, NodeItem):
-                if item.node()._server.instance_id == instance_id:
-                    item.setSelected(True)
 
     def _setStyle(self, style):
 
