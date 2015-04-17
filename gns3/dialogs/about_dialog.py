@@ -15,12 +15,12 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from ..qt import QtGui
+from ..qt import QtGui, QtWidgets
 from ..version import __version__
 from ..ui.about_dialog_ui import Ui_AboutDialog
 
 
-class AboutDialog(QtGui.QDialog, Ui_AboutDialog):
+class AboutDialog(QtWidgets.QDialog, Ui_AboutDialog):
 
     """
     About dialog.

@@ -22,14 +22,14 @@ Wizard for VirtualBox VMs.
 import sys
 
 from functools import partial
-from gns3.qt import QtCore, QtGui
+from gns3.qt import QtCore, QtGui, QtWidgets
 from gns3.servers import Servers
 
 from ..ui.virtualbox_vm_wizard_ui import Ui_VirtualBoxVMWizard
 from .. import VirtualBox
 
 
-class VirtualBoxVMWizard(QtGui.QWizard, Ui_VirtualBoxVMWizard):
+class VirtualBoxVMWizard(QtWidgets.QWizard, Ui_VirtualBoxVMWizard):
 
     """
     Wizard to create a VirtualBox VM.
@@ -42,11 +42,11 @@ class VirtualBoxVMWizard(QtGui.QWizard, Ui_VirtualBoxVMWizard):
 
         super().__init__(parent)
         self.setupUi(self)
-        self.setPixmap(QtGui.QWizard.LogoPixmap, QtGui.QPixmap(":/icons/virtualbox.png"))
-        self.setWizardStyle(QtGui.QWizard.ModernStyle)
+        self.setPixmap(QtWidgets.QWizard.LogoPixmap, QtGui.QPixmap(":/icons/virtualbox.png"))
+        self.setWizardStyle(QtWidgets.QWizard.ModernStyle)
         if sys.platform.startswith("darwin"):
             # we want to see the cancel button on OSX
-            self.setOptions(QtGui.QWizard.NoDefaultButton)
+            self.setOptions(QtWidgets.QWizard.NoDefaultButton)
 
         if VirtualBox.instance().settings()["use_local_server"]:
             # skip the server page if we use the local server
@@ -64,7 +64,7 @@ class VirtualBoxVMWizard(QtGui.QWizard, Ui_VirtualBoxVMWizard):
             for server in Servers.instance().remoteServers().values():
                 self.uiRemoteServersComboBox.addItem("{}:{}".format(server.host, server.port), server)
         if self.page(page_id) == self.uiVirtualBoxWizardPage:
-            progress_dialog = QtGui.QProgressDialog("Loading VirtualBox VMs", "Cancel", 0, 0, parent=self)
+            progress_dialog = QtWidgets.QProgressDialog("Loading VirtualBox VMs", "Cancel", 0, 0, parent=self)
             progress_dialog.setWindowModality(QtCore.Qt.WindowModal)
             progress_dialog.setWindowTitle("VirtualBox VMs")
             progress_dialog.show()
@@ -83,12 +83,12 @@ class VirtualBoxVMWizard(QtGui.QWizard, Ui_VirtualBoxVMWizard):
             return
         if error:
             progress_dialog.reject()
-            QtGui.QMessageBox.critical(self, "VirtualBox VMs", "Error while getting the VirtualBox VMs: {}".format(result["message"]))
+            QtWidgets.QMessageBox.critical(self, "VirtualBox VMs", "Error while getting the VirtualBox VMs: {}".format(result["message"]))
             return
 
         progress_dialog.accept()
         if error:
-            QtGui.QMessageBox.critical(self, "VirtualBox VMs", "{}".format(result["message"]))
+            QtWidgets.QMessageBox.critical(self, "VirtualBox VMs", "{}".format(result["message"]))
         else:
             self.uiVMListComboBox.clear()
             existing_vms = []
@@ -108,20 +108,20 @@ class VirtualBoxVMWizard(QtGui.QWizard, Ui_VirtualBoxVMWizard):
 
             # FIXME: prevent users to use "cloud"
             if self.uiCloudRadioButton.isChecked():
-                QtGui.QMessageBox.critical(self, "Cloud", "Sorry not implemented yet!")
+                QtWidgets.QMessageBox.critical(self, "Cloud", "Sorry not implemented yet!")
                 return False
 
             if VirtualBox.instance().settings()["use_local_server"] or self.uiLocalRadioButton.isChecked():
                 server = Servers.instance().localServer()
             else:
                 if not Servers.instance().remoteServers():
-                    QtGui.QMessageBox.critical(self, "Remote server", "There is no remote server registered in VirtualBox preferences")
+                    QtWidgets.QMessageBox.critical(self, "Remote server", "There is no remote server registered in VirtualBox preferences")
                     return False
                 server = self.uiRemoteServersComboBox.itemData(self.uiRemoteServersComboBox.currentIndex())
             self._server = server
         if self.currentPage() == self.uiVirtualBoxWizardPage:
             if not self.uiVMListComboBox.count():
-                QtGui.QMessageBox.critical(self, "VirtualBox VMs", "There is no VirtualBox VM available!")
+                QtWidgets.QMessageBox.critical(self, "VirtualBox VMs", "There is no VirtualBox VM available!")
                 return False
         return True
 

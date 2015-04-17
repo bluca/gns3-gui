@@ -18,13 +18,13 @@
 import os
 import sys
 
-from ..qt import QtCore, QtGui, QtWebKit
+from ..qt import QtCore, QtGui, QtWebKit, QtWidgets
 from ..ui.getting_started_dialog_ui import Ui_GettingStartedDialog
 from ..utils.get_resource import get_resource
 from ..local_config import LocalConfig
 
 
-class GettingStartedDialog(QtGui.QDialog, Ui_GettingStartedDialog):
+class GettingStartedDialog(QtWidgets.QDialog, Ui_GettingStartedDialog):
 
     """
     GettingStarted dialog.
@@ -78,4 +78,4 @@ class GettingStartedDialog(QtGui.QDialog, Ui_GettingStartedDialog):
         """
 
         if QtGui.QDesktopServices.openUrl(url) is False:
-            QtGui.QMessageBox.critical(self, "Getting started", "Failed to open the URL: {}".format(url))
+            QtWidgets.QMessageBox.critical(self, "Getting started", "Failed to open the URL: {}".format(url))

@@ -53,27 +53,6 @@ if DEFAULT_BINDING == 'PyQt5':
     QtCore.Property = QtCore.pyqtProperty
     QtCore.BINDING_VERSION_STR = QtCore.PYQT_VERSION_STR
 
-    # Qt 4 compatibility
-    QtGui.QMessageBox = QtWidgets.QMessageBox
-    QtGui.QTextEdit = QtWidgets.QTextEdit
-    QtGui.QTreeWidget = QtWidgets.QTreeWidget
-    QtGui.QTreeWidgetItem = QtWidgets.QTreeWidgetItem
-    QtGui.QDialog = QtWidgets.QDialog
-    QtGui.QGraphicsView = QtWidgets.QGraphicsView
-    QtGui.QGraphicsItem = QtWidgets.QGraphicsItem
-    QtGui.QProgressDialog = QtWidgets.QProgressDialog
-    QtGui.QWidget = QtWidgets.QWidget
-    QtGui.QMainWindow = QtWidgets.QMainWindow
-    QtGui.QApplication = QtWidgets.QApplication
-    QtGui.QGraphicsScene = QtWidgets.QGraphicsScene
-    QtGui.QAction = QtWidgets.QAction
-    QtGui.QDialogButtonBox = QtWidgets.QDialogButtonBox
-    QtGui.QStyle = QtWidgets.QStyle
-    QtGui.QWizard = QtWidgets.QWizard
-    QtGui.QMenu = QtWidgets.QMenu
-    QtGui.QGraphicsPathItem = QtWidgets.QGraphicsPathItem
-    QtGui.QFileDialog = QtWidgets.QFileDialog
-
 elif DEFAULT_BINDING == 'PyQt4':
     sip.setapi('QDate', 2)
     sip.setapi('QDateTime', 2)

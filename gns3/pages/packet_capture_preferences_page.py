@@ -22,13 +22,13 @@ Configuration page for packet capture preferences.
 import sys
 import struct
 
-from gns3.qt import QtCore, QtGui
+from gns3.qt import QtCore, QtGui, QtWidgets
 from ..ui.packet_capture_preferences_page_ui import Ui_PacketCapturePreferencesPageWidget
 from ..settings import PACKET_CAPTURE_SETTINGS, PRECONFIGURED_PACKET_CAPTURE_READER_COMMANDS
 from ..ports.port import Port
 
 
-class PacketCapturePreferencesPage(QtGui.QWidget, Ui_PacketCapturePreferencesPageWidget):
+class PacketCapturePreferencesPage(QtWidgets.QWidget, Ui_PacketCapturePreferencesPageWidget):
 
     """
     QWidget configuration page for packet capture preferences.

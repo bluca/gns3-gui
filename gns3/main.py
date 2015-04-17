@@ -35,7 +35,7 @@ import locale
 import argparse
 
 try:
-    from gns3.qt import QtCore, QtGui, DEFAULT_BINDING
+    from gns3.qt import QtCore, QtGui, QtWidgets, DEFAULT_BINDING
 except ImportError:
     raise RuntimeError("Can't import Qt modules: Qt and/or PyQt is probably not installed correctly...")
 from gns3.main_window import MainWindow
@@ -183,7 +183,7 @@ def main():
             except win32console.error as e:
                 print("warning: could not allocate console: {}".format(e))
 
-    app = QtGui.QApplication(sys.argv)
+    app = QtWidgets.QApplication(sys.argv)
 
     # this info is necessary for QSettings
     app.setOrganizationName("GNS3")

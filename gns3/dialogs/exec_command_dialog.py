@@ -15,11 +15,11 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from ..qt import QtCore, QtGui
+from ..qt import QtCore, QtGui, QtWidgets
 from ..ui.exec_command_dialog_ui import Ui_ExecCommandDialog
 
 
-class ExecCommandDialog(QtGui.QDialog, Ui_ExecCommandDialog):
+class ExecCommandDialog(QtWidgets.QDialog, Ui_ExecCommandDialog):
 
     """
     Execute a command and display its output.

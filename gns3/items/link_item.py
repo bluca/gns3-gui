@@ -181,33 +181,33 @@ class LinkItem(QtWidgets.QGraphicsPathItem):
 
         if not self._source_port.capturing() or not self._destination_port.capturing():
             # start capture
-            start_capture_action = QtGui.QAction("Start capture", menu)
+            start_capture_action = QtWidgets.QAction("Start capture", menu)
             start_capture_action.setIcon(QtGui.QIcon(':/icons/capture-start.svg'))
             start_capture_action.triggered.connect(self._startCaptureActionSlot)
             menu.addAction(start_capture_action)
 
         if self._source_port.capturing() or self._destination_port.capturing():
             # stop capture
-            stop_capture_action = QtGui.QAction("Stop capture", menu)
+            stop_capture_action = QtWidgets.QAction("Stop capture", menu)
             stop_capture_action.setIcon(QtGui.QIcon(':/icons/capture-stop.svg'))
             stop_capture_action.triggered.connect(self._stopCaptureActionSlot)
             menu.addAction(stop_capture_action)
 
             # start wireshark
-            start_wireshark_action = QtGui.QAction("Start Wireshark", menu)
+            start_wireshark_action = QtWidgets.QAction("Start Wireshark", menu)
             start_wireshark_action.setIcon(QtGui.QIcon(":/icons/wireshark.png"))
             start_wireshark_action.triggered.connect(self._startWiresharkActionSlot)
             menu.addAction(start_wireshark_action)
 
             if sys.platform.startswith("win") and struct.calcsize("P") * 8 == 64:
                 # Windows 64-bit only (Solarwinds RTV limitation).
-                analyze_action = QtGui.QAction("Analyze capture", menu)
+                analyze_action = QtWidgets.QAction("Analyze capture", menu)
                 analyze_action.setIcon(QtGui.QIcon(':/icons/rtv.png'))
                 analyze_action.triggered.connect(self._analyzeCaptureActionSlot)
                 menu.addAction(analyze_action)
 
         # delete
-        delete_action = QtGui.QAction("Delete", menu)
+        delete_action = QtWidgets.QAction("Delete", menu)
         delete_action.setIcon(QtGui.QIcon(':/icons/delete.svg'))
         delete_action.triggered.connect(self._deleteActionSlot)
         menu.addAction(delete_action)
@@ -224,12 +224,12 @@ class LinkItem(QtWidgets.QGraphicsPathItem):
                 # send a escape key to the main window to cancel the link addition
                 from ..main_window import MainWindow
                 key = QtGui.QKeyEvent(QtCore.QEvent.KeyPress, QtCore.Qt.Key_Escape, QtCore.Qt.NoModifier)
-                QtGui.QApplication.sendEvent(MainWindow.instance(), key)
+                QtWidgets.QApplication.sendEvent(MainWindow.instance(), key)
                 return
 
             # create the contextual menu
             self.setAcceptHoverEvents(False)
-            menu = QtGui.QMenu()
+            menu = QtWidgets.QMenu()
             self.populateLinkContextualMenu(menu)
             menu.exec_(QtGui.QCursor.pos())
             self.setAcceptHoverEvents(True)
@@ -274,10 +274,10 @@ class LinkItem(QtWidgets.QGraphicsPathItem):
                 ports[port] = [self._destination_item.node(), self._destination_port, dlt]
 
         if not ports:
-            QtGui.QMessageBox.critical(self._main_window, "Packet capture", "Packet capture is not supported on this link")
+            QtWidgets.QMessageBox.critical(self._main_window, "Packet capture", "Packet capture is not supported on this link")
             return
 
-        selection, ok = QtGui.QInputDialog.getItem(self._main_window, "Packet capture", "Please select a port:", list(ports.keys()), 0, False)
+        selection, ok = QtWidgets.QInputDialog.getItem(self._main_window, "Packet capture", "Please select a port:", list(ports.keys()), 0, False)
         if ok:
             if selection in ports:
                 node, port, dlt = ports[selection]
@@ -295,7 +295,7 @@ class LinkItem(QtWidgets.QGraphicsPathItem):
             ports[source_port] = [self._source_item.node(), self._source_port]
             destination_port = "{} port {}".format(self._destination_item.node().name(), self._destination_port.name())
             ports[destination_port] = [self._destination_item.node(), self._destination_port]
-            selection, ok = QtGui.QInputDialog.getItem(self._main_window, "Packet capture", "Please select a port:", list(ports.keys()), 0, False)
+            selection, ok = QtWidgets.QInputDialog.getItem(self._main_window, "Packet capture", "Please select a port:", list(ports.keys()), 0, False)
             if ok:
                 if selection in ports:
                     node, port = ports[selection]
@@ -315,7 +315,7 @@ class LinkItem(QtWidgets.QGraphicsPathItem):
             if self._source_port.capturing() and self._destination_port.capturing():
                 ports = ["{} port {}".format(self._source_item.node().name(), self._source_port.name()),
                          "{} port {}".format(self._destination_item.node().name(), self._destination_port.name())]
-                selection, ok = QtGui.QInputDialog.getItem(self._main_window, "Packet capture", "Please select a port:", ports, 0, False)
+                selection, ok = QtWidgets.QInputDialog.getItem(self._main_window, "Packet capture", "Please select a port:", ports, 0, False)
                 if ok:
                     if selection.endswith(self._source_port.name()):
                         self._source_port.startPacketCaptureReader()
@@ -326,7 +326,7 @@ class LinkItem(QtWidgets.QGraphicsPathItem):
             elif self._destination_port.capturing():
                 self._destination_port.startPacketCaptureReader()
         except OSError as e:
-            QtGui.QMessageBox.critical(self._main_window, "Packet capture", "Cannot start Wireshark: {}".format(e))
+            QtWidgets.QMessageBox.critical(self._main_window, "Packet capture", "Cannot start Wireshark: {}".format(e))
 
     def _analyzeCaptureActionSlot(self):
         """
@@ -338,7 +338,7 @@ class LinkItem(QtWidgets.QGraphicsPathItem):
             if self._source_port.capturing() and self._destination_port.capturing():
                 ports = ["{} port {}".format(self._source_item.node().name(), self._source_port.name()),
                          "{} port {}".format(self._destination_item.node().name(), self._destination_port.name())]
-                selection, ok = QtGui.QInputDialog.getItem(self._main_window, "Capture analyzer", "Please select a port:", ports, 0, False)
+                selection, ok = QtWidgets.QInputDialog.getItem(self._main_window, "Capture analyzer", "Please select a port:", ports, 0, False)
                 if ok:
                     if selection.endswith(self._source_port.name()):
                         self._source_port.startPacketCaptureAnalyzer()
@@ -349,7 +349,7 @@ class LinkItem(QtWidgets.QGraphicsPathItem):
             elif self._destination_port.capturing():
                 self._destination_port.startPacketCaptureAnalyzer()
         except OSError as e:
-            QtGui.QMessageBox.critical(self._main_window, "Capture analyzer", "Cannot start the packet capture analyzer program: {}".format(e))
+            QtWidgets.QMessageBox.critical(self._main_window, "Capture analyzer", "Cannot start the packet capture analyzer program: {}".format(e))
 
     def setHovered(self, value):
         """

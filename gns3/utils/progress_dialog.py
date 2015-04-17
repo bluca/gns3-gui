@@ -19,10 +19,10 @@
 Progress dialog that blocking tasks (file operations, network connections etc.)
 """
 
-from ..qt import QtGui
+from ..qt import QtGui, QtWidgets
 
 
-class ProgressDialog(QtGui.QProgressDialog):
+class ProgressDialog(QtWidgets.QProgressDialog):
 
     """
     Progress dialog implementation with thread support.
@@ -72,7 +72,7 @@ class ProgressDialog(QtGui.QProgressDialog):
         """
 
         self._thread.wait()
-        QtGui.QProgressDialog.accept(self)
+        QtWidgets.QProgressDialog.accept(self)
 
     def _error(self, message, stop=False):
         """
@@ -82,7 +82,7 @@ class ProgressDialog(QtGui.QProgressDialog):
         """
 
         if stop:
-            QtGui.QMessageBox.critical(self, "Error", "{}".format(message))
+            QtWidgets.QMessageBox.critical(self, "Error", "{}".format(message))
             self.cancel()
         else:
             self._errors.append(message)

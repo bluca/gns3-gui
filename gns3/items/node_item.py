@@ -19,7 +19,7 @@
 Graphical representation of a node on the QGraphicsScene.
 """
 
-from ..qt import QtCore, QtGui, QtSvg
+from ..qt import QtCore, QtGui, QtSvg, QtWidgets
 from .note_item import NoteItem
 
 
@@ -348,10 +348,10 @@ class NodeItem(QtSvg.QGraphicsSvgItem):
         """
 
         self._selected_port = None
-        menu = QtGui.QMenu()
+        menu = QtWidgets.QMenu()
         ports = self._node.ports()
         if not ports:
-            QtGui.QMessageBox.critical(self.scene().parent(), "Link", "No port available, please configure this device")
+            QtWidgets.QMessageBox.critical(self.scene().parent(), "Link", "No port available, please configure this device")
             return None
 
         # sort the ports
@@ -426,7 +426,7 @@ class NodeItem(QtSvg.QGraphicsSvgItem):
             for link in self._links:
                 link.adjust()
 
-        return QtGui.QGraphicsItem.itemChange(self, change, value)
+        return QtWidgets.QGraphicsItem.itemChange(self, change, value)
 
     def paint(self, painter, option, widget=None):
         """
@@ -439,7 +439,7 @@ class NodeItem(QtSvg.QGraphicsSvgItem):
 
         # don't show the selection rectangle
         if not self._settings["draw_rectangle_selected_item"]:
-            option.state = QtGui.QStyle.State_None
+            option.state = QtWidgets.QStyle.State_None
         super().paint(painter, option, widget)
 
         if not self._initialized or self.show_layer:
@@ -491,7 +491,7 @@ class NodeItem(QtSvg.QGraphicsSvgItem):
         # dynamically change the renderer when this node item is hovered.
         if not self.isSelected():
             self.setSharedRenderer(self._hover_renderer)
-            # effect = QtGui.QGraphicsColorizeEffect()
+            # effect = QtWidgets.QGraphicsColorizeEffect()
             # effect.setColor(QtGui.QColor("black"))
             # effect.setStrength(0.8)
             # self.setGraphicsEffect(effect)

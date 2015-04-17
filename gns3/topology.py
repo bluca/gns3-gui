@@ -23,7 +23,7 @@ Handles the saving and loading of a topology.
 import os
 import json
 import uuid
-from .qt import QtGui, QtSvg
+from .qt import QtGui, QtSvg, QtWidgets
 
 from functools import partial
 from .items.node_item import NodeItem

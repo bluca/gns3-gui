@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
-from ..qt import QtGui
+from ..qt import QtGui, QtWidgets
 
 
-class ChoicesSpinBox(QtGui.QSpinBox):
+class ChoicesSpinBox(QtWidgets.QSpinBox):
 
     """
     A custom QSpinBox that shows only values contained in `choices` iterable
