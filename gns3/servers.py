@@ -48,7 +48,7 @@ class Servers(QtCore.QObject):
 
     def __init__(self):
 
-        super(Servers, self).__init__()
+        super().__init__()
         self._local_server = None
         self._remote_servers = {}
         self._cloud_servers = {}

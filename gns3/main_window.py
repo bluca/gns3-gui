@@ -86,7 +86,7 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
 
     def __init__(self, project=None, parent=None):
 
-        super(MainWindow, self).__init__(parent)
+        super().__init__(parent)
         self.setupUi(self)
         MainWindow._instance = self
 

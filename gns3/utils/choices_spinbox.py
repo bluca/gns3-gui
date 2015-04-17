@@ -9,7 +9,7 @@ class ChoicesSpinBox(QtGui.QSpinBox):
     """
 
     def __init__(self, choices, parent=None):
-        super(ChoicesSpinBox, self).__init__(parent)
+        super().__init__(parent)
 
         self._choices = choices
         self._current_idx = 0
@@ -36,4 +36,4 @@ class ChoicesSpinBox(QtGui.QSpinBox):
                 p_int = self.minimum()
                 self._current_idx = 0
 
-        super(ChoicesSpinBox, self).setValue(p_int)
+        super().setValue(p_int)

@@ -71,7 +71,7 @@ class GraphicsView(QtGui.QGraphicsView):
         # is the main window.
         self._main_window = parent.parent()
 
-        QtGui.QGraphicsView.__init__(self, parent)
+        super().__init__(parent)
         self._settings = {}
         self._loadSettings()
 

@@ -35,7 +35,7 @@ class ConsoleThread(QtCore.QThread):
     consoleDone = QtCore.pyqtSignal(str, str, int)
 
     def __init__(self, parent, command, name, host, port):
-        super(QtCore.QThread, self).__init__(parent)
+        super().__init__(parent)
         self._command = command
         self._name = name
         self._host = host

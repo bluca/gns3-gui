@@ -45,7 +45,7 @@ class ConsoleView(PyCutExt, ConsoleCmd):
 
         # Parent class initialization
         try:
-            PyCutExt.__init__(self, None, self.intro, parent=parent)
+            super().__init__(None, self.intro, parent=parent)
 
             # dynamically get all the available commands so we can color them
             methods = inspect.getmembers(self, predicate=inspect.ismethod)
