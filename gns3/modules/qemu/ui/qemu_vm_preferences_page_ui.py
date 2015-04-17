@@ -10,7 +10,7 @@
 from gns3.qt import QtCore, QtGui, QtWidgets
 
 
-class Ui_QemuVMPreferencesPageWidget(object):
+class Ui_QemuVMPreferencesPageWidget:
 
     def setupUi(self, QemuVMPreferencesPageWidget):
         QemuVMPreferencesPageWidget.setObjectName("QemuVMPreferencesPageWidget")

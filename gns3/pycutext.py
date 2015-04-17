@@ -340,7 +340,7 @@ class PyCutExt(QtGui.QTextEdit):
             cursor.setCharFormat(char_format)
 
 
-class SyntaxColor(object):
+class SyntaxColor:
 
     """
     Allows to color python keywords.

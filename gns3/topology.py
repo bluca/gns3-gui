@@ -75,7 +75,7 @@ class TopologyInstance:
         self.ssl_ca_file = ssl_ca_file
 
 
-class Topology(object):
+class Topology:
 
     """
     Topology.

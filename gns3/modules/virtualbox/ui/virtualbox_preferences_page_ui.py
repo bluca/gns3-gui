@@ -10,7 +10,7 @@
 from gns3.qt import QtCore, QtGui, QtWidgets
 
 
-class Ui_VirtualBoxPreferencesPageWidget(object):
+class Ui_VirtualBoxPreferencesPageWidget:
 
     def setupUi(self, VirtualBoxPreferencesPageWidget):
         VirtualBoxPreferencesPageWidget.setObjectName("VirtualBoxPreferencesPageWidget")

@@ -10,7 +10,7 @@
 from gns3.qt import QtCore, QtGui, QtWidgets
 
 
-class Ui_ServerPreferencesPageWidget(object):
+class Ui_ServerPreferencesPageWidget:
 
     def setupUi(self, ServerPreferencesPageWidget):
         ServerPreferencesPageWidget.setObjectName("ServerPreferencesPageWidget")

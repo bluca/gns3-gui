@@ -10,7 +10,7 @@
 from gns3.qt import QtCore, QtGui, QtWidgets
 
 
-class Ui_GeneralPreferencesPageWidget(object):
+class Ui_GeneralPreferencesPageWidget:
 
     def setupUi(self, GeneralPreferencesPageWidget):
         GeneralPreferencesPageWidget.setObjectName("GeneralPreferencesPageWidget")

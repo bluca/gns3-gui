@@ -10,7 +10,7 @@
 from gns3.qt import QtCore, QtGui, QtWidgets
 
 
-class Ui_IOSRouterWizard(object):
+class Ui_IOSRouterWizard:
 
     def setupUi(self, IOSRouterWizard):
         IOSRouterWizard.setObjectName("IOSRouterWizard")

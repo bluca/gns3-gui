@@ -10,7 +10,7 @@
 from gns3.qt import QtCore, QtGui, QtWidgets
 
 
-class Ui_atmSwitchConfigPageWidget(object):
+class Ui_atmSwitchConfigPageWidget:
 
     def setupUi(self, atmSwitchConfigPageWidget):
         atmSwitchConfigPageWidget.setObjectName("atmSwitchConfigPageWidget")

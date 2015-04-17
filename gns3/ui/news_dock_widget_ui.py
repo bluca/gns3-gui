@@ -10,7 +10,7 @@
 from gns3.qt import QtCore, QtGui, QtWidgets
 
 
-class Ui_NewsDockWidget(object):
+class Ui_NewsDockWidget:
 
     def setupUi(self, NewsDockWidget):
         NewsDockWidget.setObjectName("NewsDockWidget")

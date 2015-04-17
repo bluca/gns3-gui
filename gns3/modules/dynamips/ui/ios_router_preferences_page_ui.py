@@ -10,7 +10,7 @@
 from gns3.qt import QtCore, QtGui, QtWidgets
 
 
-class Ui_IOSRouterPreferencesPageWidget(object):
+class Ui_IOSRouterPreferencesPageWidget:
 
     def setupUi(self, IOSRouterPreferencesPageWidget):
         IOSRouterPreferencesPageWidget.setObjectName("IOSRouterPreferencesPageWidget")

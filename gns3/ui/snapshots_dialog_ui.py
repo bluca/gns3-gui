@@ -10,7 +10,7 @@
 from gns3.qt import QtCore, QtGui, QtWidgets
 
 
-class Ui_SnapshotsDialog(object):
+class Ui_SnapshotsDialog:
 
     def setupUi(self, SnapshotsDialog):
         SnapshotsDialog.setObjectName("SnapshotsDialog")

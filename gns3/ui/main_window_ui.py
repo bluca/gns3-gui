@@ -10,7 +10,7 @@
 from gns3.qt import QtCore, QtGui, QtWidgets
 
 
-class Ui_MainWindow(object):
+class Ui_MainWindow:
 
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")

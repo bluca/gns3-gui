@@ -10,7 +10,7 @@
 from gns3.qt import QtCore, QtGui, QtWidgets
 
 
-class Ui_IdlePCDialog(object):
+class Ui_IdlePCDialog:
 
     def setupUi(self, IdlePCDialog):
         IdlePCDialog.setObjectName("IdlePCDialog")

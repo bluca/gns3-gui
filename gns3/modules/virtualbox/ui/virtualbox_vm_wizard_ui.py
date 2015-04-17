@@ -10,7 +10,7 @@
 from gns3.qt import QtCore, QtGui, QtWidgets
 
 
-class Ui_VirtualBoxVMWizard(object):
+class Ui_VirtualBoxVMWizard:
 
     def setupUi(self, VirtualBoxVMWizard):
         VirtualBoxVMWizard.setObjectName("VirtualBoxVMWizard")

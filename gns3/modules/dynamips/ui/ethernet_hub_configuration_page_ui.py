@@ -10,7 +10,7 @@
 from gns3.qt import QtCore, QtGui, QtWidgets
 
 
-class Ui_ethernetHubConfigPageWidget(object):
+class Ui_ethernetHubConfigPageWidget:
 
     def setupUi(self, ethernetHubConfigPageWidget):
         ethernetHubConfigPageWidget.setObjectName("ethernetHubConfigPageWidget")

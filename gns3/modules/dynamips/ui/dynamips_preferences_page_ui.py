@@ -10,7 +10,7 @@
 from gns3.qt import QtCore, QtGui, QtWidgets
 
 
-class Ui_DynamipsPreferencesPageWidget(object):
+class Ui_DynamipsPreferencesPageWidget:
 
     def setupUi(self, DynamipsPreferencesPageWidget):
         DynamipsPreferencesPageWidget.setObjectName("DynamipsPreferencesPageWidget")

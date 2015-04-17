@@ -10,7 +10,7 @@
 from gns3.qt import QtCore, QtGui, QtWidgets
 
 
-class Ui_virtualBoxVMConfigPageWidget(object):
+class Ui_virtualBoxVMConfigPageWidget:
 
     def setupUi(self, virtualBoxVMConfigPageWidget):
         virtualBoxVMConfigPageWidget.setObjectName("virtualBoxVMConfigPageWidget")

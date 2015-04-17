@@ -10,7 +10,7 @@
 from gns3.qt import QtCore, QtGui, QtWidgets
 
 
-class Ui_iouDeviceConfigPageWidget(object):
+class Ui_iouDeviceConfigPageWidget:
 
     def setupUi(self, iouDeviceConfigPageWidget):
         iouDeviceConfigPageWidget.setObjectName("iouDeviceConfigPageWidget")
