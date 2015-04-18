@@ -1225,8 +1225,6 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                 self._settings["last_check_for_update"] = current_epoch
                 self.setSettings(self._settings)
 
-
-
     def saveProjectAs(self):
         """
         Saves a project to another location/name.
