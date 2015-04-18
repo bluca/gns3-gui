@@ -875,7 +875,7 @@ background-none;
      <normaloff>:/icons/save-as-project.svg</normaloff>:/icons/save-as-project.svg</iconset>
    </property>
    <property name="text">
-    <string>&amp;Save project as…</string>
+    <string>&amp;Save project as...</string>
    </property>
    <property name="toolTip">
     <string>Save project as...</string>

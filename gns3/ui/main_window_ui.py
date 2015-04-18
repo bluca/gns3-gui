@@ -597,7 +597,7 @@ class Ui_MainWindow:
         self.uiSnapshotAction.setStatusTip(_translate("MainWindow", "Manage snapshots"))
         self.uiShowLayersAction.setText(_translate("MainWindow", "Show layers"))
         self.uiShowLayersAction.setStatusTip(_translate("MainWindow", "Show layers"))
-        self.uiSaveProjectAsAction.setText(_translate("MainWindow", "&Save project as…"))
+        self.uiSaveProjectAsAction.setText(_translate("MainWindow", "&Save project as..."))
         self.uiSaveProjectAsAction.setToolTip(_translate("MainWindow", "Save project as..."))
         self.uiSaveProjectAsAction.setStatusTip(_translate("MainWindow", "Save project as..."))
         self.uiReloadAllAction.setText(_translate("MainWindow", "Reload all devices"))
